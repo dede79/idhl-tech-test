@@ -382,6 +382,14 @@
                   </volume-pricing>
                 {%- endif -%}
               </div>
+              {%- when 'inventory_count' -%} 
+              <div id="inventory-{{ section.id }}" {{ block.shopify_attributes }}> 
+                {% if product.selected_or_first_available_variant.inventory_quantity <= block.settings.show_inventory_threshold or block.settings.show_inventory_threshold == 0 %} 
+                  <span class="badge" style="color: {{ block.settings.text_color }}; background-color: {{ block.settings.background_color }}";>
+                    Low in stock
+                  </span>
+                {% endif %} 
+              </div>
             {%- when 'popup' -%}
               <modal-opener
                 class="product-popup-modal__opener no-js-hidden quick-add-hidden"
@@ -795,6 +803,30 @@
       "type": "quantity_selector",
       "name": "t:sections.main-product.blocks.quantity_selector.name",
       "limit": 1
+    },
+    {
+      "type": "inventory_count",
+      "name": "Inventory Count",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "number",
+          "id": "show_inventory_threshold",
+          "label": "Show Inventory Threshold",
+          "default": 10,
+          "info": "Show the inventory count if it falls to this number. Leave at 0 to always show inventory."
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color"
+        }
+      ]
     },
     {
       "type": "variant_picker",
