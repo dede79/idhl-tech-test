@@ -1133,6 +1133,10 @@ class VariantSelects extends HTMLElement {
 
         if (price) price.classList.remove('hidden');
 
+        const inventory = document.getElementById(`inventory-${this.dataset.section}`);
+
+        if (inventory) inventory.classList.remove('visibility-hidden'), this.updateInventory(html);
+
         if (inventoryDestination) inventoryDestination.classList.toggle('hidden', inventorySource.innerText === '');
 
         const addButtonUpdated = html.getElementById(`ProductSubmitButton-${sectionId}`);
@@ -1149,6 +1153,14 @@ class VariantSelects extends HTMLElement {
           },
         });
       });
+  }
+
+  updateInventory(html) {
+    const id = `inventory-${this.dataset.section}`;
+    const destination = document.getElementById(id);
+    const source = html.getElementById(id);
+  
+    if (source && destination) destination.innerHTML = source.innerHTML;
   }
 
   toggleAddButton(disable = true, text, modifyClass = true) {
@@ -1174,7 +1186,7 @@ class VariantSelects extends HTMLElement {
     const addButton = button.querySelector('[name="add"]');
     const addButtonText = button.querySelector('[name="add"] > span');
     const price = document.getElementById(`price-${this.dataset.section}`);
-    const inventory = document.getElementById(`Inventory-${this.dataset.section}`);
+    const inventoryUnavailable = document.getElementById(`Inventory-${this.dataset.section}`);
     const sku = document.getElementById(`Sku-${this.dataset.section}`);
     const pricePerItem = document.getElementById(`Price-Per-Item-${this.dataset.section}`);
     const volumeNote = document.getElementById(`Volume-Note-${this.dataset.section}`);
@@ -1184,7 +1196,7 @@ class VariantSelects extends HTMLElement {
     if (!addButton) return;
     addButtonText.textContent = window.variantStrings.unavailable;
     if (price) price.classList.add('hidden');
-    if (inventory) inventory.classList.add('hidden');
+    if (inventoryUnavailable) inventory.classList.add('hidden');
     if (sku) sku.classList.add('hidden');
     if (pricePerItem) pricePerItem.classList.add('hidden');
     if (volumeNote) volumeNote.classList.add('hidden');

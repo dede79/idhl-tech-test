@@ -382,10 +382,10 @@
                   </volume-pricing>
                 {%- endif -%}
               </div>
-              {%- when 'inventory_count' -%} 
-              <div id="inventory-{{ section.id }}" {{ block.shopify_attributes }}> 
-                {% if product.selected_or_first_available_variant.inventory_quantity <= block.settings.show_inventory_threshold or block.settings.show_inventory_threshold == 0 %} 
-                  <span class="badge" style="color: {{ block.settings.text_color }}; background-color: {{ block.settings.background_color }}";>
+            {%- when 'inventory_count' -%} 
+              <div id="inventory-{{ section.id }}"> 
+                {% if product.selected_or_first_available_variant.inventory_quantity <= block.settings.show_inventory_threshold %} 
+                  <span class="product-inventory_count" style="background:{{  block.settings.background_color }}; color:{{ block.settings.text_color }}">
                     Low in stock
                   </span>
                 {% endif %} 
@@ -819,12 +819,16 @@
         {
           "type": "color",
           "id": "text_color",
-          "label": "Text color"
+          "label": "Text color",
+          "default": "#ffffff"
+         
         },
         {
           "type": "color",
           "id": "background_color",
-          "label": "Background color"
+          "label": "Background color",
+          "default": "#000000"
+          
         }
       ]
     },
