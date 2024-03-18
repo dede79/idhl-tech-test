@@ -1105,7 +1105,7 @@ class VariantSelects extends HTMLElement {
 
         if (inventoryCount) inventoryCount.classList.remove('visibility-hidden'), this.updateInventory(html);
          
-        //start here
+        // custom labels
         const variantExclusiveSource = html.getElementById(`exclusiveLabel-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
 
         const variantExclusiveDestination = document.getElementById(`exclusiveLabel-${this.dataset.section}`);
@@ -1114,7 +1114,7 @@ class VariantSelects extends HTMLElement {
 
         const variantBestsellerSource = html.getElementById(`bestSellerLabel-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
 
-        const variantBestsellerDestination = document.getElementById(`bestSellerLabel-${this.dataset.section}`);
+        const variantBestsellerDestination  = document.getElementById(`bestSellerLabel-${this.dataset.section}`);
         
         if (variantBestsellerSource && variantBestsellerDestination) variantBestsellerDestination.innerHTML = variantBestsellerSource.innerHTML;
 
@@ -1123,7 +1123,7 @@ class VariantSelects extends HTMLElement {
         const variantNewdropDestination = document.getElementById(`newDropLabel-${this.dataset.section}`);
         
         if (variantNewdropSource && variantNewdropDestination) variantNewdropDestination.innerHTML = variantNewdropSource.innerHTML;
-        // end here
+        // end custom labels
 
         const volumePricingSource = html.getElementById(
           `Volume-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`
