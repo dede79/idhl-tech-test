@@ -163,6 +163,10 @@
                     show_rating: section.settings.show_rating,
                     lazy_load: lazy_load,
                     show_quick_add: section.settings.enable_quick_add,
+                    show_exclusive_label: section.settings.show_exclusive_label,
+                    show_newDrop: section.settings.show_newDrop,
+                    show_bestSeller: section.settings.show_bestSeller,
+                    show_sale: section.settings.show_sale,
                     section_id: section.id
                   %}
                 </li>
@@ -301,6 +305,30 @@
       "id": "enable_quick_add",
       "default": false,
       "label": "t:sections.main-collection-product-grid.settings.enable_quick_buy.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_exclusive_label",
+      "default": false,
+      "label": "Show 'Exclusive' label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newDrop",
+      "default": false,
+      "label": "Show 'New drop' label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_bestSeller",
+      "default": false,
+      "label": "Show 'Best seller' label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale",
+      "default": false,
+      "label": "Show 'Sale' label"
     },
     {
       "type": "header",

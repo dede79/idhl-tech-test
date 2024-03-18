@@ -119,23 +119,51 @@
               </a>
             </h3>
           </div>
-          <div class="card__badge {{ settings.badge_position }}">
-            {%- if card_product.available == false -%}
-              <span
-                id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
-                class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
-              >
-                {{- 'products.product.sold_out' | t -}}
-              </span>
-            {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
-              <span
-                id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
-                class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}"
-              >
-                {{- 'products.product.on_sale' | t -}}
-              </span>
-            {%- endif -%}
-          </div>
+         
+          {%- if show_exclusive_label -%}
+            {%-  if card_product.selected_or_first_available_variant.metafields.custom.exclusive_label.value == true -%}
+              <div class="card__badge top left">
+                <span class="badge badge--top-left color-{{ settings.sale_badge_color_scheme }}">Exclusive</span>
+              </div>
+            {% endif %}
+          {%- endif -%}
+          
+          {%- if show_newDrop -%}
+            {%-  if card_product.selected_or_first_available_variant.metafields.custom.new_drop.value == true -%}
+              <div class="card__badge top right">
+                <span class="badge badge--top-right color-{{ settings.sale_badge_color_scheme }}">New drop</span>
+              </div>
+            {% endif %}
+          {%- endif -%}
+        
+          {%- if show_bestSeller -%}
+            {%-  if card_product.selected_or_first_available_variant.metafields.custom.best_seller.value == true -%}
+              <div class="card__badge bottom right">
+                  <span class="badge badge--bottom-right color-{{ settings.sale_badge_color_scheme }}">Best seller</span>
+              </div>
+            {% endif %}
+          {%- endif -%}
+
+          {%- if show_sale -%}
+            <div class="card__badge {{ settings.badge_position }}">
+              {%- if card_product.available == false -%}
+                <span
+                  id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
+                  class="badge badge--bottom-left color-{{ settings.sold_out_badge_color_scheme }}"
+                >
+                  {{- 'products.product.sold_out' | t -}}
+                </span>
+              {%- elsif card_product.compare_at_price > card_product.price and card_product.available -%}
+                <span
+                  id="NoMediaStandardBadge-{{ section_id }}-{{ card_product.id }}"
+                  class="badge badge--bottom-left color-{{ settings.sale_badge_color_scheme }}"
+                >
+                  {{- 'products.product.on_sale' | t -}}
+                </span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
         </div>
       </div>
       <div class="card__content">
