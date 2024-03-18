@@ -95,6 +95,7 @@
                   </h2>
                 </a>
               </div>
+
             {%- when 'price' -%}
               <div class="no-js-hidden" id="price-{{ section.id }}" role="status" {{ block.shopify_attributes }}>
                 {%- render 'price',
@@ -382,14 +383,37 @@
                   </volume-pricing>
                 {%- endif -%}
               </div>
+              
             {%- when 'inventory_count' -%} 
-              <div id="inventory-{{ section.id }}"> 
+              <div id="inventoryCount-{{ section.id }}" {{ block.shopify_attributes }}> 
                 {% if product.selected_or_first_available_variant.inventory_quantity <= block.settings.show_inventory_threshold %} 
-                  <span class="product-inventory_count" style="background:{{  block.settings.background_color }}; color:{{ block.settings.text_color }}">
-                    Low in stock
+                  <span class="product-variant__new-label" style="background:{{  block.settings.background_color }}; color:{{ block.settings.text_color }}">
+                    Low stock
                   </span>
                 {% endif %} 
               </div>
+
+            {%- when 'exclusive_label' -%}
+              <div id="exclusiveLabel-{{ section.id }}">
+                {% if product.selected_or_first_available_variant.metafields.custom.exclusive_label.value == true %}
+                  <span class="product-variant__new-label" style="background:{{ block.settings.background_color }}; color:{{ block.settings.text_color }}">Exclusive</span>
+                {%- endif -%}
+              </div>
+
+            {%- when 'bestSeller_label' -%}
+              <div id="bestSellerLabel-{{ section.id }}">
+                {% if product.selected_or_first_available_variant.metafields.custom.best_seller.value == true %}
+                  <span class="product-variant__new-label" style="background:{{ block.settings.background_color }}; color:{{ block.settings.text_color }}">Best Seller</span>
+                {%- endif -%}
+              </div>
+
+            {%- when 'newDrop_label' -%}
+              <div id="newDropLabel-{{ section.id }}">
+                {% if product.selected_or_first_available_variant.metafields.custom.new_drop.value == true %}
+                  <span class="product-variant__new-label" style="background:{{ block.settings.background_color }}; color:{{ block.settings.text_color }}">New drop</span>
+                {%- endif -%}
+              </div>
+              
             {%- when 'popup' -%}
               <modal-opener
                 class="product-popup-modal__opener no-js-hidden quick-add-hidden"
@@ -816,6 +840,69 @@
           "default": 10,
           "info": "Show the inventory count if it falls to this number. Leave at 0 to always show inventory."
         },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#ffffff"
+         
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color",
+          "default": "#000000"
+          
+        }
+      ]
+    },
+    {
+      "type": "exclusive_label",
+      "name": "Exclusive label",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#ffffff"
+         
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color",
+          "default": "#000000"
+          
+        }
+      ]
+    },
+    {
+      "type": "bestSeller_label",
+      "name": "Best seller label",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#ffffff"
+         
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background color",
+          "default": "#000000"
+          
+        }
+      ]
+    },
+    {
+      "type": "newDrop_label",
+      "name": "New drop label",
+      "limit": 1,
+      "settings": [
         {
           "type": "color",
           "id": "text_color",
@@ -2219,3 +2306,5 @@
   ]
 }
 {% endschema %}
+
+

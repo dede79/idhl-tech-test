@@ -969,6 +969,7 @@ class VariantSelects extends HTMLElement {
       this.renderProductInfo();
       this.updateShareUrl();
     }
+
   }
 
   updateOptions() {
@@ -1091,10 +1092,38 @@ class VariantSelects extends HTMLElement {
           `Sku-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`
         );
         const skuDestination = document.getElementById(`Sku-${this.dataset.section}`);
+
         const inventorySource = html.getElementById(
           `Inventory-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`
         );
         const inventoryDestination = document.getElementById(`Inventory-${this.dataset.section}`);
+
+        if (inventoryDestination) inventoryDestination.classList.toggle('hidden', inventorySource.innerText === '');
+
+        // customised low stock inventory count
+        const inventoryCount = document.getElementById(`inventoryCount-${this.dataset.section}`);
+
+        if (inventoryCount) inventoryCount.classList.remove('visibility-hidden'), this.updateInventory(html);
+         
+        //start here
+        const variantExclusiveSource = html.getElementById(`exclusiveLabel-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
+
+        const variantExclusiveDestination = document.getElementById(`exclusiveLabel-${this.dataset.section}`);
+        
+        if (variantExclusiveSource && variantExclusiveDestination) variantExclusiveDestination.innerHTML = variantExclusiveSource.innerHTML;
+
+        const variantBestsellerSource = html.getElementById(`bestSellerLabel-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
+
+        const variantBestsellerDestination = document.getElementById(`bestSellerLabel-${this.dataset.section}`);
+        
+        if (variantBestsellerSource && variantBestsellerDestination) variantBestsellerDestination.innerHTML = variantBestsellerSource.innerHTML;
+
+        const variantNewdropSource = html.getElementById(`newDropLabel-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
+
+        const variantNewdropDestination = document.getElementById(`newDropLabel-${this.dataset.section}`);
+        
+        if (variantNewdropSource && variantNewdropDestination) variantNewdropDestination.innerHTML = variantNewdropSource.innerHTML;
+        // end here
 
         const volumePricingSource = html.getElementById(
           `Volume-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`
@@ -1133,12 +1162,6 @@ class VariantSelects extends HTMLElement {
 
         if (price) price.classList.remove('hidden');
 
-        const inventory = document.getElementById(`inventory-${this.dataset.section}`);
-
-        if (inventory) inventory.classList.remove('visibility-hidden'), this.updateInventory(html);
-
-        if (inventoryDestination) inventoryDestination.classList.toggle('hidden', inventorySource.innerText === '');
-
         const addButtonUpdated = html.getElementById(`ProductSubmitButton-${sectionId}`);
         this.toggleAddButton(
           addButtonUpdated ? addButtonUpdated.hasAttribute('disabled') : true,
@@ -1152,11 +1175,20 @@ class VariantSelects extends HTMLElement {
             variant: this.currentVariant,
           },
         });
+
+        // console.log({
+        //   event: PUB_SUB_EVENTS.variantChange,
+        //   data: {
+        //     sectionId,
+        //     html,
+        //     variant: this.currentVariant,
+        //   },
+        // });
       });
   }
 
   updateInventory(html) {
-    const id = `inventory-${this.dataset.section}`;
+    const id = `inventoryCount-${this.dataset.section}`;
     const destination = document.getElementById(id);
     const source = html.getElementById(id);
   
@@ -1207,6 +1239,7 @@ class VariantSelects extends HTMLElement {
   getVariantData() {
     this.variantData = this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent);
     return this.variantData;
+    
   }
 }
 
