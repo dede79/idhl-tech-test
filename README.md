@@ -1,2 +1,2 @@
-** Custom Product Labels Instructions **
+# Custom Product Labels Instructions #
 
