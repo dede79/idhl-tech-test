@@ -969,6 +969,7 @@ class VariantSelects extends HTMLElement {
       this.renderProductInfo();
       this.updateShareUrl();
     }
+
   }
 
   updateOptions() {
@@ -1091,10 +1092,38 @@ class VariantSelects extends HTMLElement {
           `Sku-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`
         );
         const skuDestination = document.getElementById(`Sku-${this.dataset.section}`);
+
         const inventorySource = html.getElementById(
           `Inventory-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`
         );
         const inventoryDestination = document.getElementById(`Inventory-${this.dataset.section}`);
+
+        if (inventoryDestination) inventoryDestination.classList.toggle('hidden', inventorySource.innerText === '');
+
+        // customised low stock inventory count
+        const inventoryCount = document.getElementById(`inventoryCount-${this.dataset.section}`);
+
+        if (inventoryCount) inventoryCount.classList.remove('visibility-hidden'), this.updateInventory(html);
+         
+        // custom labels
+        const variantExclusiveSource = html.getElementById(`exclusiveLabel-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
+
+        const variantExclusiveDestination = document.getElementById(`exclusiveLabel-${this.dataset.section}`);
+        
+        if (variantExclusiveSource && variantExclusiveDestination) variantExclusiveDestination.innerHTML = variantExclusiveSource.innerHTML;
+
+        const variantBestsellerSource = html.getElementById(`bestSellerLabel-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
+
+        const variantBestsellerDestination  = document.getElementById(`bestSellerLabel-${this.dataset.section}`);
+        
+        if (variantBestsellerSource && variantBestsellerDestination) variantBestsellerDestination.innerHTML = variantBestsellerSource.innerHTML;
+
+        const variantNewdropSource = html.getElementById(`newDropLabel-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
+
+        const variantNewdropDestination = document.getElementById(`newDropLabel-${this.dataset.section}`);
+        
+        if (variantNewdropSource && variantNewdropDestination) variantNewdropDestination.innerHTML = variantNewdropSource.innerHTML;
+        // end custom labels
 
         const volumePricingSource = html.getElementById(
           `Volume-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`
@@ -1133,8 +1162,6 @@ class VariantSelects extends HTMLElement {
 
         if (price) price.classList.remove('hidden');
 
-        if (inventoryDestination) inventoryDestination.classList.toggle('hidden', inventorySource.innerText === '');
-
         const addButtonUpdated = html.getElementById(`ProductSubmitButton-${sectionId}`);
         this.toggleAddButton(
           addButtonUpdated ? addButtonUpdated.hasAttribute('disabled') : true,
@@ -1148,7 +1175,24 @@ class VariantSelects extends HTMLElement {
             variant: this.currentVariant,
           },
         });
+
+        // console.log({
+        //   event: PUB_SUB_EVENTS.variantChange,
+        //   data: {
+        //     sectionId,
+        //     html,
+        //     variant: this.currentVariant,
+        //   },
+        // });
       });
+  }
+
+  updateInventory(html) {
+    const id = `inventoryCount-${this.dataset.section}`;
+    const destination = document.getElementById(id);
+    const source = html.getElementById(id);
+  
+    if (source && destination) destination.innerHTML = source.innerHTML;
   }
 
   toggleAddButton(disable = true, text, modifyClass = true) {
@@ -1174,7 +1218,7 @@ class VariantSelects extends HTMLElement {
     const addButton = button.querySelector('[name="add"]');
     const addButtonText = button.querySelector('[name="add"] > span');
     const price = document.getElementById(`price-${this.dataset.section}`);
-    const inventory = document.getElementById(`Inventory-${this.dataset.section}`);
+    const inventoryUnavailable = document.getElementById(`Inventory-${this.dataset.section}`);
     const sku = document.getElementById(`Sku-${this.dataset.section}`);
     const pricePerItem = document.getElementById(`Price-Per-Item-${this.dataset.section}`);
     const volumeNote = document.getElementById(`Volume-Note-${this.dataset.section}`);
@@ -1184,7 +1228,7 @@ class VariantSelects extends HTMLElement {
     if (!addButton) return;
     addButtonText.textContent = window.variantStrings.unavailable;
     if (price) price.classList.add('hidden');
-    if (inventory) inventory.classList.add('hidden');
+    if (inventoryUnavailable) inventory.classList.add('hidden');
     if (sku) sku.classList.add('hidden');
     if (pricePerItem) pricePerItem.classList.add('hidden');
     if (volumeNote) volumeNote.classList.add('hidden');
@@ -1195,6 +1239,7 @@ class VariantSelects extends HTMLElement {
   getVariantData() {
     this.variantData = this.variantData || JSON.parse(this.querySelector('[type="application/json"]').textContent);
     return this.variantData;
+    
   }
 }
 
