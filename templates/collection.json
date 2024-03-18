@@ -21,7 +21,7 @@
         "show_rating": false,
         "enable_quick_add": false,
         "show_exclusive_label": true,
-        "show_newDrop": false,
+        "show_newDrop": true,
         "show_bestSeller": true,
         "show_sale": true,
         "enable_filtering": true,
