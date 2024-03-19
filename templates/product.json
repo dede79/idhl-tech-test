@@ -44,7 +44,7 @@
         "inventory_count_CNKUYr": {
           "type": "inventory_count",
           "settings": {
-            "show_inventory_threshold": 0,
+            "show_inventory_threshold": 2,
             "text_color": "#ffffff",
             "background_color": "#000000"
           }
