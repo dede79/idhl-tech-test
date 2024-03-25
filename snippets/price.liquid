@@ -116,13 +116,33 @@
       </span>
     </small>
   </div>
+
   {%- if show_badges -%}
-    <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme }}">
+   {% if shop.metaobjects.product_label['sale'].system.handle == "sale" %}
+    {% assign label = shop.metaobjects.product_label['sale'] %}
+      <span 
+        class="product-variant__new-label" 
+        style="
+        {% if label.label_background_color.value %}
+        background:{{ label.label_background_color.value }};
+        {% else %} 
+        background:#000000;
+        {% endif %}
+        {% if label.label_text_color.value != blank %}
+        color:{{ label.label_text_color.value }}
+        {% else %}
+        color:#ffffff;
+        {% endif %}" >
+        {{label.label_name.value }}
+      </span>
+    {% endif %}
+
+    {% comment %} <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme }}">
       {{ 'products.product.on_sale' | t }}
     </span>
 
     <span class="badge price__badge-sold-out color-{{ settings.sold_out_badge_color_scheme }}">
       {{ 'products.product.sold_out' | t }}
-    </span>
+    </span> {% endcomment %}
   {%- endif -%}
 </div>

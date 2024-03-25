@@ -420,13 +420,6 @@
                   </span>
                 {% endfor %}
               </div>
-
-            {%- when 'newDrop_label' -%}
-              <div id="newDropLabel-{{ section.id }}">
-                {% if product.selected_or_first_available_variant.metafields.custom.new_drop.value == true %}
-                  <span class="product-variant__new-label" style="background:{{ block.settings.background_color }}; color:{{ block.settings.text_color }}">New drop</span>
-                {%- endif -%}
-              </div>
               
             {%- when 'popup' -%}
               <modal-opener
