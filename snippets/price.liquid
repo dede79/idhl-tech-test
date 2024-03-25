@@ -121,8 +121,9 @@
    {% if shop.metaobjects.product_label['sale'].system.handle == "sale" %}
     {% assign label = shop.metaobjects.product_label['sale'] %}
       <span 
-        class="product-variant__new-label" 
+        class="badge price__badge-sale product-variant__new-label" 
         style="
+        vertical-align:middle;
         {% if label.label_background_color.value %}
         background:{{ label.label_background_color.value }};
         {% else %} 

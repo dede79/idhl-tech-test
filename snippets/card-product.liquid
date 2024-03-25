@@ -119,14 +119,6 @@
               </a>
             </h3>
           </div>
-         
-          {%- if show_bestSeller -%}
-            {%-  if card_product.selected_or_first_available_variant.metafields.custom.best_seller.value == true -%}
-              <div class="card__badge bottom right">
-                  <span class="badge badge--bottom-right color-{{ settings.sale_badge_color_scheme }}">Best seller</span>
-              </div>
-            {% endif %}
-          {%- endif -%}
 
           {%- if show_sale -%}
             <div class="card__badge {{ settings.badge_position }}">
