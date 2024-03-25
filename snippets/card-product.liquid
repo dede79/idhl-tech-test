@@ -120,22 +120,6 @@
             </h3>
           </div>
          
-          {%- if show_exclusive_label -%}
-            {%-  if card_product.selected_or_first_available_variant.metafields.custom.exclusive_label.value == true -%}
-              <div class="card__badge top left">
-                <span class="badge badge--top-left color-{{ settings.sale_badge_color_scheme }}">Exclusive</span>
-              </div>
-            {% endif %}
-          {%- endif -%}
-          
-          {%- if show_newDrop -%}
-            {%-  if card_product.selected_or_first_available_variant.metafields.custom.new_drop.value == true -%}
-              <div class="card__badge top right">
-                <span class="badge badge--top-right color-{{ settings.sale_badge_color_scheme }}">New drop</span>
-              </div>
-            {% endif %}
-          {%- endif -%}
-        
           {%- if show_bestSeller -%}
             {%-  if card_product.selected_or_first_available_variant.metafields.custom.best_seller.value == true -%}
               <div class="card__badge bottom right">

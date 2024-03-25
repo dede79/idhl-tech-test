@@ -18,6 +18,13 @@
       padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
       padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
     }
+    
+    #bestSellerLabel-{{ section.id }}{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
 
     @media screen and (min-width: 750px) {
       .section-{{ section.id }}-padding {
@@ -208,7 +215,7 @@
                 </details>
               </div>
             {%- when 'quantity_selector' -%}
-              <div
+             <div
                 id="Quantity-Form-{{ section.id }}"
                 class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
                 {{ block.shopify_attributes }}
@@ -393,18 +400,25 @@
                 {% endif %} 
               </div>
 
-            {%- when 'exclusive_label' -%}
-              <div id="exclusiveLabel-{{ section.id }}">
-                {% if product.selected_or_first_available_variant.metafields.custom.exclusive_label.value == true %}
-                  <span class="product-variant__new-label" style="background:{{ block.settings.background_color }}; color:{{ block.settings.text_color }}">Exclusive</span>
-                {%- endif -%}
-              </div>
-
             {%- when 'bestSeller_label' -%}
               <div id="bestSellerLabel-{{ section.id }}">
-                {% if product.selected_or_first_available_variant.metafields.custom.best_seller.value == true %}
-                  <span class="product-variant__new-label" style="background:{{ block.settings.background_color }}; color:{{ block.settings.text_color }}">Best Seller</span>
-                {%- endif -%}
+                {% for label in product.selected_or_first_available_variant.metafields.custom.choose_labels.value %}
+                  <span 
+                    class="product-variant__new-label" 
+                    style="
+                    {% if label.label_background_color %}
+                    background:{{ label.label_background_color }};
+                    {% else %} 
+                    background:#000000;
+                    {% endif %}
+                    {% if label.label_text_color != blank %}
+                    color:{{ label.label_text_color }}
+                    {% else %}
+                    color:#ffffff;
+                    {% endif %}" >
+                    {{label.label_name }}
+                  </span>
+                {% endfor %}
               </div>
 
             {%- when 'newDrop_label' -%}
@@ -829,95 +843,9 @@
       "limit": 1
     },
     {
-      "type": "inventory_count",
-      "name": "Inventory Count",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "number",
-          "id": "show_inventory_threshold",
-          "label": "Show Inventory Threshold",
-          "default": 10,
-          "info": "Show the inventory count if it falls to this number. Leave at 0 to always show inventory."
-        },
-        {
-          "type": "color",
-          "id": "text_color",
-          "label": "Text color",
-          "default": "#ffffff"
-         
-        },
-        {
-          "type": "color",
-          "id": "background_color",
-          "label": "Background color",
-          "default": "#000000"
-          
-        }
-      ]
-    },
-    {
-      "type": "exclusive_label",
-      "name": "Exclusive label",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "color",
-          "id": "text_color",
-          "label": "Text color",
-          "default": "#ffffff"
-         
-        },
-        {
-          "type": "color",
-          "id": "background_color",
-          "label": "Background color",
-          "default": "#000000"
-          
-        }
-      ]
-    },
-    {
       "type": "bestSeller_label",
-      "name": "Best seller label",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "color",
-          "id": "text_color",
-          "label": "Text color",
-          "default": "#ffffff"
-         
-        },
-        {
-          "type": "color",
-          "id": "background_color",
-          "label": "Background color",
-          "default": "#000000"
-          
-        }
-      ]
-    },
-    {
-      "type": "newDrop_label",
-      "name": "New drop label",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "color",
-          "id": "text_color",
-          "label": "Text color",
-          "default": "#ffffff"
-         
-        },
-        {
-          "type": "color",
-          "id": "background_color",
-          "label": "Background color",
-          "default": "#000000"
-          
-        }
-      ]
+      "name": "Custom Labels",
+      "limit": 1
     },
     {
       "type": "variant_picker",

@@ -1118,11 +1118,6 @@ class VariantSelects extends HTMLElement {
         
         if (variantBestsellerSource && variantBestsellerDestination) variantBestsellerDestination.innerHTML = variantBestsellerSource.innerHTML;
 
-        const variantNewdropSource = html.getElementById(`newDropLabel-${this.dataset.originalSection ? this.dataset.originalSection : this.dataset.section}`);
-
-        const variantNewdropDestination = document.getElementById(`newDropLabel-${this.dataset.section}`);
-        
-        if (variantNewdropSource && variantNewdropDestination) variantNewdropDestination.innerHTML = variantNewdropSource.innerHTML;
         // end custom labels
 
         const volumePricingSource = html.getElementById(
